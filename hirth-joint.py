@@ -1,7 +1,7 @@
 
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 
 
@@ -11,39 +11,40 @@ import numpy as np
 Ri=17.0           # [mm]
 d=2*Ri
 # Outer radius
-Ro=24.75           # [mm]
+Ro=26           # [mm]
 D=2*Ro
 # Mean radius
 Rm=(Ri+Ro)/2        # [mm]
+
 
 # Number of teeth
 z=24
 
 # Smallest tooth height
-hp=2.78         # [mm]
+hp=2.85         # [mm]
 # Biggest tooth height
-hpp=4.59          # [mm]
+hpp=4.9          # [mm]
 # G Point (Center of Gravity)
 hG= (hp+hpp)/2/2        # [mm]
 
 # Smallest tooth thickness
 ap=3.92         # [mm]
 # Biggest tooth thickness
-app=5.95       # [mm]
+app=6.27       # [mm]
 
 # Tooth length
 L=Ro-Ri         # [mm]
 
 # Fixing hole diameter
-dL=0            # [mm]
+dL=4            # [mm]
 # Number of fixing holes
-nb=0
+nb=1
 
 # Tooth root radius
 r=0.3           # [mm]
 
 # Crown clearance
-s=0.43           # [mm]
+s=0.4           # [mm]
 
 # Load bearing percentage (0.65 for milled; 0.75 for grinded teeth)
 eta_z=0.75
@@ -54,7 +55,7 @@ print("Az = " + str(Az))
 
 ##### Load calculations #####
 # External torque to be transmitted
-T= 100e3          # [N-mm]
+T= 141e3          # [N-mm]
 
 # Total tangential force
 Fu=np.round(T/Rm,1)         # [N]
@@ -62,14 +63,14 @@ print("Fu = " + str(Fu))
 
 
 # Axial force (friction neglected)
-Fa=np.round(Fu*np.tan(np.pi/3),1)
+Fa=np.round(Fu*np.tan(np.pi/6),1)
 
 print("Fa = " + str(Fa))
 
 
 ##### Stress calculations #####
 # Bending stress
-sigma_b=np.round(6*Fu*hG/(L*np.power((ap+app)/2,2)),1)      # [MPa]
+sigma_b=np.round(6*(Fu/z)*hG/(L*np.power((ap+app)/2,2)),1)      # [MPa]
 
 print("sigma_b = " + str(sigma_b))
 
@@ -95,7 +96,7 @@ print("p_max = " + str(p_max))
 c=0.114     
 
 # h estimation
-h=c*D-(2*r+s)
+h=np.round(c*D-(2*r+s),2)
 print("h = " + str(h))
 
 
